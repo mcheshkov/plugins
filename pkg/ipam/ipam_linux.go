@@ -20,7 +20,7 @@ import (
 	"os"
 
 	current "github.com/containernetworking/cni/pkg/types/100"
-	"github.com/containernetworking/plugins/pkg/ip"
+//	"github.com/containernetworking/plugins/pkg/ip"
 	"github.com/containernetworking/plugins/pkg/utils/sysctl"
 
 	"github.com/vishvananda/netlink"
@@ -99,9 +99,9 @@ func ConfigureIface(ifName string, res *current.Result) error {
 		}
 	}
 
-	if v6gw != nil {
-		ip.SettleAddresses(ifName, 10)
-	}
+//	if v6gw != nil {
+//		ip.SettleAddresses(ifName, 10)
+//	}
 
 	for _, r := range res.Routes {
 		routeIsV4 := r.Dst.IP.To4() != nil
