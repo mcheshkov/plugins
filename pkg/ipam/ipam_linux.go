@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"syscall"
 
 	current "github.com/containernetworking/cni/pkg/types/100"
 //	"github.com/containernetworking/plugins/pkg/ip"
@@ -87,6 +88,9 @@ func ConfigureIface(ifName string, res *current.Result) error {
 		}
 
 		addr := &netlink.Addr{IPNet: &ipc.Address, Label: ""}
+		if ipc.Address.IP.To4() == nil {
+			addr.Flags |= syscall.IFA_F_NODAD
+		}
 		if err = netlink.AddrAdd(link, addr); err != nil {
 			return fmt.Errorf("failed to add IP addr %v to %q: %v", ipc, ifName, err)
 		}
